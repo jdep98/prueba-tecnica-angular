@@ -1,0 +1,99 @@
+<div class="usuario-list-container">
+  <p-card>
+    <!-- Loader -->
+    <div *ngIf="loading" class="loading-container">
+      <p-progressSpinner></p-progressSpinner>
+      <p>Cargando usuarios...</p>
+    </div>
+
+    <!-- Error Message -->
+    <p-message *ngIf="error && !loading" severity="error" [text]="error"></p-message>
+
+    <!-- Content -->
+    <div *ngIf="!loading && !error">
+
+      <!-- Users Table -->
+      <p-table 
+        #dt
+        [value]="filteredUsers" 
+        dataKey="id"
+        [paginator]="true" 
+        [rows]="10"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} usuarios"
+        [globalFilterFields]="['name', 'email', 'address.city']"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [loading]="loading"
+        [rowHover]="true"
+        [showGridlines]="true"
+        responsiveLayout="scroll"
+      >
+        <ng-template #caption>
+          <div class="flex justify-between items-center flex-column sm:flex-row">
+            <button pButton pRipple label="Limpiar" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="clear(dt)"></button>
+            <p-iconfield iconPosition="left" class="ml-auto">
+              <p-inputicon>
+                <i class="pi pi-search"></i>
+              </p-inputicon>
+              <input 
+                pInputText 
+                type="text" 
+                (input)="onGlobalFilter(dt, $event)" 
+                placeholder="Buscar usuarios..." 
+              />
+            </p-iconfield>
+          </div>
+        </ng-template>
+        <ng-template #header>
+          <tr>
+            <th style="min-width: 12rem">
+              <div class="flex justify-between items-center">
+                Nombre
+                <p-columnFilter type="text" field="name" display="menu" placeholder="Buscar por nombre"></p-columnFilter>
+              </div>
+            </th>
+            <th style="min-width: 12rem">
+              <div class="flex justify-between items-center">
+                Correo Electrónico
+                <p-columnFilter type="text" field="email" display="menu" placeholder="Buscar por correo"></p-columnFilter>
+              </div>
+            </th>
+            <th style="min-width: 10rem">
+              <div class="flex justify-between items-center">
+                Ciudad
+                <p-columnFilter type="text" field="address.city" display="menu" placeholder="Buscar por ciudad"></p-columnFilter>
+              </div>
+            </th>
+            <th style="min-width: 8rem">Acciones</th>
+          </tr>
+        </ng-template>
+        <ng-template #body let-user>
+          <tr>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.address.city }}</td>
+            <td>
+              <p-button 
+                pRipple
+                icon="pi pi-eye"
+                (onClick)="viewUserDetail(user.id)"
+                [outlined]="true"
+              ></p-button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template #emptymessage>
+          <tr>
+            <td colspan="4">No se encontraron usuarios.</td>
+          </tr>
+        </ng-template>
+        <ng-template #loadingbody>
+          <tr>
+            <td colspan="4">Cargando datos de usuarios. Por favor espere.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </p-card>
+</div>

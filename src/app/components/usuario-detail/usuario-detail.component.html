@@ -1,0 +1,96 @@
+<div class="usuario-detail-container">
+  <!-- Loader -->
+  <div *ngIf="loading" class="loading-container">
+    <p-progressSpinner></p-progressSpinner>
+    <p>Cargando información del usuario...</p>
+  </div>
+
+  <!-- Error Message -->
+  <p-message *ngIf="error && !loading" severity="error" [text]="error"></p-message>
+
+  <!-- User Detail -->
+  <div *ngIf="user && !loading && !error">
+    <div class="back-button-container">
+      <p-button 
+        icon="pi pi-arrow-left" 
+        label="Volver al Listado" 
+        (onClick)="goBack()"
+        [outlined]="true"
+      ></p-button>
+    </div>
+
+    <p-card [header]="user.name" class="user-card">
+      <!-- Personal Information -->
+      <div class="info-section">
+        <h3><i class="pi pi-user"></i> Información Personal</h3>
+        <p-divider></p-divider>
+        <div class="info-grid">
+          <div class="info-item">
+            <strong>Nombre de usuario:</strong>
+            <span>{{ user.username }}</span>
+          </div>
+          <div class="info-item">
+            <strong>Correo electrónico:</strong>
+            <span>{{ user.email }}</span>
+          </div>
+          <div class="info-item">
+            <strong>Teléfono:</strong>
+            <span>{{ user.phone }}</span>
+          </div>
+          <div class="info-item">
+            <strong>Sitio web:</strong>
+            <span>{{ user.website }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Address Information -->
+      <div class="info-section">
+        <h3><i class="pi pi-map-marker"></i> Dirección</h3>
+        <p-divider></p-divider>
+        <div class="info-grid">
+          <div class="info-item">
+            <strong>Calle:</strong>
+            <span>{{ user.address.street }}</span>
+          </div>
+          <div class="info-item">
+            <strong>Suite:</strong>
+            <span>{{ user.address.suite }}</span>
+          </div>
+          <div class="info-item">
+            <strong>Ciudad:</strong>
+            <span>{{ user.address.city }}</span>
+          </div>
+          <div class="info-item">
+            <strong>Código postal:</strong>
+            <span>{{ user.address.zipcode }}</span>
+          </div>
+          <div class="info-item">
+            <strong>Coordenadas:</strong>
+            <span>Lat: {{ user.address.geo.lat }}, Lng: {{ user.address.geo.lng }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Company Information -->
+      <div class="info-section">
+        <h3><i class="pi pi-building"></i> Empresa</h3>
+        <p-divider></p-divider>
+        <div class="info-grid">
+          <div class="info-item">
+            <strong>Nombre:</strong>
+            <span>{{ user.company.name }}</span>
+          </div>
+          <div class="info-item full-width">
+            <strong>Eslogan:</strong>
+            <span>{{ user.company.catchPhrase }}</span>
+          </div>
+          <div class="info-item full-width">
+            <strong>Actividad:</strong>
+            <span>{{ user.company.bs }}</span>
+          </div>
+        </div>
+      </div>
+    </p-card>
+  </div>
+</div>
