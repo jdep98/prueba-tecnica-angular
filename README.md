@@ -20,7 +20,7 @@ npm install -g @angular/cli
 ### Opción A — Clonar desde Git
 
 ```bash
-git clone <url-del-repositorio>
+git clone https://github.com/jdep98/prueba-tecnica-angular
 cd prueba-tecnica-angular
 ```
 
